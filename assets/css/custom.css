@@ -705,7 +705,7 @@ header.main-header .header-sticky.active .navbar{
 	background-position: center center;
 	background-size: cover;
 	padding: 280px 0 250px;
-	min-height: 100vh;
+	min-height: 90vh;
 	margin-top: -118px;
 }
 
