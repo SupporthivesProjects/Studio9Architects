@@ -704,8 +704,8 @@ header.main-header .header-sticky.active .navbar{
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
-	padding: 280px 0 250px;
-	min-height: 90vh;
+	padding: 275px 0 230px;
+	min-height: 86vh;
 	margin-top: -118px;
 }
 
@@ -805,7 +805,7 @@ header.main-header .header-sticky.active .navbar{
 
 .hero-content .section-title h3,
 .hero-content .section-title h1{
-	color: var(--white-color);
+	color: black;
 }
 
 .hero-content .section-title p{
