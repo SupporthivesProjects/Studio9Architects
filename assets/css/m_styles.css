@@ -42,6 +42,12 @@
 #slide_controls div.active {
     background-color: #fff7c0;
 }
+.degree_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 30px;
+}
 
 
 @media only screen and (max-width: 700px) {
