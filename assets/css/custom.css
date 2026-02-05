@@ -1755,6 +1755,9 @@ header.main-header .header-sticky.active .navbar{
 
 .our-testimonial-content{
 	padding: 100px;
+	padding-top: 36px;
+    padding-bottom: 0px;
+
 }
 
 .our-testimonial-content .section-title{
