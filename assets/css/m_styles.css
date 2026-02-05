@@ -33,9 +33,7 @@
   opacity: 1;
   box-shadow: 0 6px 15px rgba(0,0,0,0.25);
 
- 
-  margin-left: -315px;
-    margin-right: -315px;
+
 }
 #carouselExampleAutoplaying .carousel-inner {
   padding-bottom: 70px;
@@ -43,16 +41,7 @@
 
 
 /* Position LEFT button */
-#carouselExampleAutoplaying .carousel-control-prev {
-  left: 45%;
-}
 
-
-
-/* Position RIGHT button */
-#carouselExampleAutoplaying .carousel-control-next {
-  right: 45%;
-}
 #carouselExampleAutoplaying .carousel-control-prev-icon,
 #carouselExampleAutoplaying .carousel-control-next-icon {
   filter: invert(1);
