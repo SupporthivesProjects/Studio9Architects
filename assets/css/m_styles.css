@@ -47,7 +47,13 @@
   filter: invert(1);
 }
 
-
+.color_change_page.active {
+   background-color: black;
+   border-color: black;
+}
+.color_change_page {
+    color: black;
+}
 
 #slide_controls {
     display: flex;
