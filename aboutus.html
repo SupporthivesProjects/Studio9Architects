@@ -1479,6 +1479,14 @@
     <script src="./assets/js/wow.min.js"></script>
     <!-- Main Custom js file -->
     <script src="./assets/js/function.js"></script>
+    <script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop real submit
+    alert("Submit successful!");
+    this.reset(); // optional: clear form
+});
+</script>
+
 
     <script>
         window.addEventListener('load', function () {
