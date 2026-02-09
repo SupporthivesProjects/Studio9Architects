@@ -393,8 +393,8 @@
                                         </button>
                                     </h2>
                                     <div id="collapse12" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordion">
-                                        <div class="accordion-body">
-                                            <p>You can book it through the online enquiry form.</p>
+                                        <div class="accordion-body"> 
+                                            <p><a type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">Click hear</a> to book a consultation</p>
                                         </div>
                                     </div>
                                 </div>
@@ -438,6 +438,50 @@
         </div>
     </div>
     <!-- Page Faq End -->
+     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Book Your Free Consultation Today With Us </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="contactForm" action="contact.html#" method="POST" data-toggle="validator"
+                         data-wow-delay="0.4s" novalidate="true"
+                        style="visibility: visible;">
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-4">
+                                <input type="text" name="name" class="form-control" id="name"placeholder="Name*" required="">
+                                    <div class="help-block with-errors"></div>
+                            </div>
+
+                            <div class="form-group col-md-6 mb-4">
+                                <input type="email" name="email" class="form-control" id="email"placeholder="Email Address*" required="">
+                                    <div class="help-block with-errors"></div>
+                            </div>
+
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="text" name="phone" class="form-control" id="phone"placeholder="Your Phone" required="">
+                                    <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="text" name="phone" class="form-control" id="phone"placeholder="Area" required="">
+                                    <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <input type="text" name="phone" class="form-control" id="phone"placeholder="Tentative Budget " required="">
+                                    <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn-default">submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 
     <!-- Footer Start -->
     <footer class="main-footer">
@@ -535,7 +579,7 @@
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div class="footer-contact-content">
-                                <p>SHOP NO 2, Kesar Kunj, Vasanji Lalji Rd, near RAILWAY STATION, Kandivali, Jethava Nagar, Kandivali West, Mumbai, Maharashtra 400067</p>
+                                <p>Shop No 2, Kesar Kunj, Vasanji Lalji Rd, near Railway Station, Kandivali, Jethava Nagar, Kandivali West, Mumbai, Maharashtra 400067</p>
                             </div>
                         </div>
                         <!-- Footer Contact Item End -->
