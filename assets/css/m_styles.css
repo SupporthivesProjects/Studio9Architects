@@ -48,7 +48,8 @@
 }
 
 .color_change_page.active {
-   background-color: black;
+   background-color: #EFB422;
+   border: 1px solid #EFB422;
    border-color: black;
 }
 .color_change_page {
