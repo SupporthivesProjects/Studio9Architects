@@ -156,7 +156,7 @@
                     <!-- Our Project Nav start -->
                     <div class="our-Project-nav wow fadeInUp" data-wow-delay="0.4s" style="visibility: hidden; animation-delay: 0.4s; animation-name: none;">
                         <ul>
-                            <li><a href="index.html" class="filter-btn active-btn" data-filter="*">all</a></li>
+                            <li><a href="#" class="filter-btn active-btn" data-filter="*">all</a></li>
                             <li><a href="index.html" class="filter-btn" data-filter=".architecture">Residential</a></li>
                             <li><a href="index.html" class="filter-btn" data-filter=".interior">Commercial</a></li>
                             <!--<li><a href="index.html" data-filter=".bedroom">Bed Room</a></li>-->
@@ -169,7 +169,7 @@
                 <div class="col-lg-12">
                     <!-- Project Item Boxes start -->
                     <div class="row project-item-boxes align-items-center" style="position: relative; height: 1039.59px;">
-                        <div class="col-md-6 project-item-box architecture" style="position: absolute; left: 0px; top: 0px;">
+                        <div class="col-md-6 project-item-box architecture " style="position: absolute; left: 0px; top: 0px;">
                             <!-- Project Item Start -->
                             <div class="project-item wow fadeInUp" style="visibility: hidden; animation-name: none;">
                                 <div class="project-image">
@@ -192,7 +192,7 @@
                             <!-- Project Item End -->
                         </div>
     
-                        <div class="col-md-6 project-item-box interior kitchen" style="position: absolute; left: 650px; top: 0px;">
+                        <div class="col-md-6 project-item-box interior kitchen " style="position: absolute; left: 650px; top: 0px;">
                             <!-- Project Item Start -->
                             <div class="project-item wow fadeInUp" data-wow-delay="0.2s" style="visibility: hidden; animation-delay: 0.2s; animation-name: none;">
                                 <div class="project-image">
@@ -215,7 +215,7 @@
                             <!-- Project Item End -->
                         </div>
     
-                        <div class="col-md-6 project-item-box  furniture interior" style="position: absolute; left: 0px; top: 519.797px;">
+                        <div class="col-md-6 project-item-box  furniture interior " style="position: absolute; left: 0px; top: 519.797px;">
                             <!-- Project Item Start -->
                             <div class="project-item wow fadeInUp" data-wow-delay="0.4s" style="visibility: hidden; animation-delay: 0.4s; animation-name: none;">
                                 <div class="project-image">
@@ -240,7 +240,7 @@
                             <!-- Project Item End -->
                         </div>
     
-                        <div class="col-md-6 project-item-box kitchen architecture" style="position: absolute; left: 650px; top: 519.797px;">
+                        <div class="col-md-6 project-item-box kitchen architecture " style="position: absolute; left: 650px; top: 519.797px;">
                             <!-- Project Item Start -->
                             <div class="project-item wow fadeInUp" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none;">
                                 <div class="project-image">
@@ -263,7 +263,7 @@
                             <!-- Project Item End -->
                         </div>
 
-                        <div class="col-md-6 project-item-box architecture" style="position: absolute; left: 650px; top: 519.797px;">
+                        <div class="col-md-6 project-item-box architecture " style="position: absolute; left: 650px; top: 519.797px;">
                             <!-- Project Item Start -->
                             <div class="project-item wow fadeInUp" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none;">
                                 <div class="project-image">
@@ -318,6 +318,9 @@
                 </div>
                 <div class="all-services-btn wow fadeInUp" id="comBtn" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none; display:none;">
                     <a href="./Commercial.html" class="btn-default">view more</a>
+                </div>
+                <div class="all-services-btn wow fadeInUp" id="allBtn" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none; display:none;">
+                    <a href="./All_project.html" class="btn-default">view more</a>
                 </div>
         </div>
     
@@ -467,34 +470,37 @@
     <!-- Footer End -->
  <!-- Jquery Library File -->
 <script>
-document.querySelectorAll('.filter-btn').forEach(btn => {
+const filterButtons = document.querySelectorAll('.filter-btn');
+
+filterButtons.forEach(btn => {
     btn.addEventListener('click', function (e) {
         e.preventDefault();
 
-        // active state
-        document.querySelectorAll('.filter-btn')
-            .forEach(b => b.classList.remove('active-btn'));
+        filterButtons.forEach(b => b.classList.remove('active-btn'));
         this.classList.add('active-btn');
 
         const filter = this.dataset.filter;
-        const resBtn = document.getElementById('resBtn');
-        const comBtn = document.getElementById('comBtn');
 
-        // hide both first
-        resBtn.style.display = 'none';
-        comBtn.style.display = 'none';
+        document.querySelectorAll('.all-services-btn')
+            .forEach(b => b.style.display = 'none');
 
-        // show relevant button
         if (filter === '.architecture') {
-            resBtn.style.display = 'inline-block';
-        }
-
-        if (filter === '.interior') {
-            comBtn.style.display = 'inline-block';
+            document.getElementById('resBtn').style.display = 'inline-block';
+        } 
+        else if (filter === '.interior') {
+            document.getElementById('comBtn').style.display = 'inline-block';
+        } 
+        else if (filter === '*') {
+            document.getElementById('allBtn').style.display = 'inline-block';
         }
     });
 });
+
+
+
+document.querySelector('.filter-btn.active-btn')?.click();
 </script>
+
 
 
 
