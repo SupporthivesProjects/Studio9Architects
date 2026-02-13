@@ -766,6 +766,15 @@
                     </div>
                     <!-- Project Item Boxes End -->
                 </div>
+                <div class="all-services-btn wow fadeInUp" id="resBtn" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none; display:none;">
+                    <a href="./Residential.html" class="btn-default">view more</a>
+                </div>
+                <div class="all-services-btn wow fadeInUp" id="comBtn" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none; display:none;">
+                    <a href="./Commercial.html" class="btn-default">view more</a>
+                </div>
+                <div class="all-services-btn wow fadeInUp" id="allBtn" data-wow-delay="0.6s" style="visibility: hidden; animation-delay: 0.6s; animation-name: none; display:none;">
+                    <a href="./All_project.html" class="btn-default">view more</a>
+                </div>
             </div>
         </div>
      </div>
@@ -1413,6 +1422,37 @@ on storage solutions</p>
             });
         });
     </script>
+    <script>
+const filterButtons = document.querySelectorAll('.filter-btn');
+
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        filterButtons.forEach(b => b.classList.remove('active-btn'));
+        this.classList.add('active-btn');
+
+        const filter = this.dataset.filter;
+
+        document.querySelectorAll('.all-services-btn')
+            .forEach(b => b.style.display = 'none');
+
+        if (filter === '.architecture') {
+            document.getElementById('resBtn').style.display = 'inline-block';
+        } 
+        else if (filter === '.interior') {
+            document.getElementById('comBtn').style.display = 'inline-block';
+        } 
+        else if (filter === '*') {
+            document.getElementById('allBtn').style.display = 'inline-block';
+        }
+    });
+});
+
+
+
+document.querySelector('.filter-btn.active-btn')?.click();
+</script>
 
 
 </body></html>
