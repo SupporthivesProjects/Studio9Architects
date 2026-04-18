@@ -1495,5 +1495,30 @@
     document.querySelector('.filter-btn.active-btn')?.click();
 </script> -->
 
+<!-- disable right click on images -->
+<script>
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+</script>
+<script>
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    });
+</script>
+<script>
+    document.querySelectorAll('img').forEach(img => {
+        img.setAttribute('draggable', false);
+    });
+</script>
+<script>
+    document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && (e.key === 's' || e.key === 'u')) {
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body></html>
