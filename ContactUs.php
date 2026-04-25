@@ -91,8 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $mail->setFrom($_ENV['FROM_EMAIL'], $_ENV['FROM_NAME']);
 
-        $mail->addAddress('email1@example.com');
-        $mail->addAddress('email2@example.com');
+        $mail->addAddress('ar.miteshbhojani@studio9architects.in');
+        $mail->addAddress('studio9architectsoffice@gmail.com');
 
         $mail->isHTML(true);
         $mail->Subject = 'New Contact Form Submission';
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         logMessage("Preparing admin email");
         $mail->SMTPDebug = 2;
-$mail->Debugoutput = 'html';
+        $mail->Debugoutput = 'html';
         $mail->send();
         logMessage("Admin mail sent");
 
