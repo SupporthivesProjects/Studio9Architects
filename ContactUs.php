@@ -470,7 +470,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!-- Contact Form Start -->
                         <div class="contact-form">
                             <!-- Contact Form Start -->
-                            <form id="MycontactForm" onsubmit="return true;" action="ContactUs.php" method="POST" 
+                            <form id="contactForm" onsubmit="return true;" action="ContactUs.php" method="POST" 
                                 class="wow fadeInUp" data-wow-delay="0.4s" 
                                 style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
                                 <div class="row">
