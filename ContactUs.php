@@ -20,14 +20,22 @@ function loadEnv($path) {
     }
 }
 
+function logMessage($message) {
+    $file = __DIR__ . '/mail.log';
+    $time = date("Y-m-d H:i:s");
+    file_put_contents($file, "[$time] $message\n", FILE_APPEND);
+}
+
 loadEnv(__DIR__ . '/.env');
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    logMessage("Form submitted");
 
     $hcaptcha = $_POST['h-captcha-response'] ?? '';
 
     if (!$hcaptcha) {
+        logMessage("Captcha Incomplete");
         die("Captcha not completed.");
     }
 
@@ -49,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $responseData = json_decode($response);
 
     if (!$responseData->success) {
+        logMessage("Captcha failed");
         die("Captcha verification failed.");
     }
 
@@ -59,10 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (!$name || !$email || !$message) {
+        logMessage("fields missing");
         die("Required fields missing.");
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        logMessage("Invaid email format");
         die("Invalid email format.");
     }
 
@@ -94,9 +105,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p><b>Message:</b> $message</p>
         ";
 
+        logMessage("Preparing admin email");
         $mail->send();
+        logMessage("Admin mail sent");
 
     } catch (Exception $e) {
+        logMessage("Admin email failed: " . $mail->ErrorInfo);
         die("Mailer Error (Admin): " . $mail->ErrorInfo);
     }
 
@@ -125,17 +139,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>$message</p>
         ";
 
+        logMessage("Preparing USER email");
         $mail2->send();
+        logMessage("User email sent to: $email");
 
     } catch (Exception $e) {
+        logMessage("USER email failed: " . $mail2->ErrorInfo);
         die("Mailer Error (User): " . $mail2->ErrorInfo);
     }
 
     echo "success";
 }
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -233,12 +248,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <li class="nav-item"><a class="nav-link" href="404.html">404</a></li>
                                     </ul>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="contactUs.php">Contact Us</a></li>                              -->
+                                <li class="nav-item"><a class="nav-link" href="ContactUs.php">Contact Us</a></li>                              -->
                             </ul>
                         </div>
                         <!-- Header Btn Start -->
                         <div class="header-btn d-inline-flex">
-                            <a href="contactUs.php" class="btn-default">get in touch</a>
+                            <a href="ContactUs.php" class="btn-default">get in touch</a>
                         </div>
                         <!-- Header Btn End -->
                     </div>
@@ -294,7 +309,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         tabindex="-1">404</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contactUs.php" role="menuitem"
+                        <li class="nav-item"><a class="nav-link" href="ContactUs.php" role="menuitem"
                                 tabindex="-1">Contact Us</a></li>
                     </ul>
                 </div>
@@ -691,7 +706,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <li><a href="aboutus.html">about our company</a></li>
                                 <li><a href="Services.html">view our service</a></li>
                                 <li><a href="Projects.html">our latest projects</a></li>
-                                <li><a href="contactUs.php">contact us</a></li>
+                                <li><a href="ContactUs.php">contact us</a></li>
                             </ul>
                         </div>
                         <!-- Footer Links End -->
