@@ -7,15 +7,31 @@ require 'src/Exception.php';
 require 'src/PHPMailer.php';
 require 'src/SMTP.php';
 
+function loadEnv($path) {
+    if (!file_exists($path)) return;
+
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+
+        list($name, $value) = explode('=', $line, 2);
+        $_ENV[trim($name)] = trim($value);
+    }
+}
+
+loadEnv(__DIR__ . '/.env');
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $hcaptcha = $_POST['h-captcha-response'];
+    $hcaptcha = $_POST['h-captcha-response'] ?? '';
 
     if (!$hcaptcha) {
         die("Captcha not completed.");
     }
 
-    $secretKey = "YOUR_SECRET_KEY";
+    $secretKey = $_ENV['HCAPTCHA_SECRET'];
 
     $data = [
         'secret' => $secretKey,
@@ -36,41 +52,91 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Captcha verification failed.");
     }
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $message = $_POST['message'];
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $message = trim($_POST['message'] ?? '');
 
-    $mail = new PHPMailer(true);
 
-    $mail->isSMTP();
-    $mail->Host       = 'YOUR_SMTP_HOST';
-    $mail->SMTPAuth   = true;
-    $mail->Username   = 'YOUR_SMTP_USERNAME';
-    $mail->Password   = 'YOUR_SMTP_PASSWORD';
-    $mail->SMTPSecure = 'tls'; // or 'ssl'
-    $mail->Port       = 587;   // or 465
+    if (!$name || !$email || !$message) {
+        die("Required fields missing.");
+    }
 
-    $mail->setFrom('YOUR_EMAIL', 'Website Contact');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        die("Invalid email format.");
+    }
 
-    $mail->addAddress('email1@example.com');
-    $mail->addAddress('email2@example.com');
 
-    $mail->isHTML(true);
-$mail->Subject = 'New Contact Form Submission';
+    try {
+        $mail = new PHPMailer(true);
 
-$mail->Body = "
-    <h3>New Contact Message</h3>
-    <p><b>Name:</b> $name</p>
-    <p><b>Email:</b> $email</p>
-    <p><b>Phone:</b> $phone</p>
-    <p><b>Message:</b> $message</p>
-";
+        $mail->isSMTP();
+        $mail->Host       = $_ENV['SMTP_HOST'];
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $_ENV['SMTP_USERNAME'];
+        $mail->Password   = $_ENV['SMTP_PASSWORD'];
+        $mail->SMTPSecure = $_ENV['SMTP_ENCRYPTION'];
+        $mail->Port       = $_ENV['SMTP_PORT'];
 
-$mail->send();
+        $mail->setFrom($_ENV['FROM_EMAIL'], $_ENV['FROM_NAME']);
 
+        $mail->addAddress('email1@example.com');
+        $mail->addAddress('email2@example.com');
+
+        $mail->isHTML(true);
+        $mail->Subject = 'New Contact Form Submission';
+
+        $mail->Body = "
+            <h3>New Contact Message</h3>
+            <p><b>Name:</b> $name</p>
+            <p><b>Email:</b> $email</p>
+            <p><b>Phone:</b> $phone</p>
+            <p><b>Message:</b> $message</p>
+        ";
+
+        $mail->send();
+
+    } catch (Exception $e) {
+        die("Mailer Error (Admin): " . $mail->ErrorInfo);
+    }
+
+    try {
+        $mail2 = new PHPMailer(true);
+
+        $mail2->isSMTP();
+        $mail2->Host       = $_ENV['SMTP_HOST'];
+        $mail2->SMTPAuth   = true;
+        $mail2->Username   = $_ENV['SMTP_USERNAME'];
+        $mail2->Password   = $_ENV['SMTP_PASSWORD'];
+        $mail2->SMTPSecure = $_ENV['SMTP_ENCRYPTION'];
+        $mail2->Port       = $_ENV['SMTP_PORT'];
+
+        $mail2->setFrom($_ENV['FROM_EMAIL'], $_ENV['FROM_NAME']);
+        $mail2->addAddress($email, $name);
+
+        $mail2->isHTML(true);
+        $mail2->Subject = 'We received your message';
+
+        $mail2->Body = "
+            <h3>Thank you, $name!</h3>
+            <p>We have received your message and will get back to you soon.</p>
+            <br>
+            <p><b>Your Message:</b></p>
+            <p>$message</p>
+        ";
+
+        $mail2->send();
+
+    } catch (Exception $e) {
+        die("Mailer Error (User): " . $mail2->ErrorInfo);
+    }
+
+    echo "success";
 }
 ?>
+
+
+
 
 <!DOCTYPE html>
 <!-- saved from url=(0061)https://demo.awaikenthemes.com/html-preview/inspaire/404.html -->
