@@ -106,8 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ";
 
         logMessage("Preparing admin email");
-        $mail->SMTPDebug = 2;
-        $mail->Debugoutput = 'html';
         $mail->send();
         logMessage("Admin mail sent");
 
@@ -825,6 +823,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script src="./assets/js/jquery.magnific-popup.min.js"></script>
         <!-- SmoothScroll -->
         <script src="./assets/js/SmoothScroll.js"></script>
+        <!-- Sweet Alert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Parallax js -->
         <script src="./assets/js/parallaxie.js"></script>
         <!-- MagicCursor js file -->
@@ -870,6 +870,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (e.ctrlKey && (e.key === 's' || e.key === 'u')) {
                 e.preventDefault();
             }
+        });
+    </script>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            let form = this;
+            let formData = new FormData(form);
+
+            fetch("ContactUs.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.trim() === "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Message Sent!',
+                        text: 'We will get back to you soon.'
+                    });
+                    form.reset();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!'
+                });
+            });
         });
     </script>
 
