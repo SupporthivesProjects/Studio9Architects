@@ -149,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     echo "success";
+    exit;
 }
 ?>
 
@@ -879,7 +880,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             let form = this;
             let formData = new FormData(form);
 
-            fetch("ContactUs.php", {
+            fetch("", {
                 method: "POST",
                 body: formData
             })
