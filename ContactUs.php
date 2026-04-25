@@ -1,3 +1,77 @@
+<?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'src/Exception.php';
+require 'src/PHPMailer.php';
+require 'src/SMTP.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $hcaptcha = $_POST['h-captcha-response'];
+
+    if (!$hcaptcha) {
+        die("Captcha not completed.");
+    }
+
+    $secretKey = "YOUR_SECRET_KEY";
+
+    $data = [
+        'secret' => $secretKey,
+        'response' => $hcaptcha,
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ];
+
+    $verify = curl_init();
+    curl_setopt($verify, CURLOPT_URL, "https://hcaptcha.com/siteverify");
+    curl_setopt($verify, CURLOPT_POST, true);
+    curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($verify);
+    $responseData = json_decode($response);
+
+    if (!$responseData->success) {
+        die("Captcha verification failed.");
+    }
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $message = $_POST['message'];
+
+    $mail = new PHPMailer(true);
+
+    $mail->isSMTP();
+    $mail->Host       = 'YOUR_SMTP_HOST';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'YOUR_SMTP_USERNAME';
+    $mail->Password   = 'YOUR_SMTP_PASSWORD';
+    $mail->SMTPSecure = 'tls'; // or 'ssl'
+    $mail->Port       = 587;   // or 465
+
+    $mail->setFrom('YOUR_EMAIL', 'Website Contact');
+
+    $mail->addAddress('email1@example.com');
+    $mail->addAddress('email2@example.com');
+
+    $mail->isHTML(true);
+$mail->Subject = 'New Contact Form Submission';
+
+$mail->Body = "
+    <h3>New Contact Message</h3>
+    <p><b>Name:</b> $name</p>
+    <p><b>Email:</b> $email</p>
+    <p><b>Phone:</b> $phone</p>
+    <p><b>Message:</b> $message</p>
+";
+
+$mail->send();
+
+}
+?>
+
 <!DOCTYPE html>
 <!-- saved from url=(0061)https://demo.awaikenthemes.com/html-preview/inspaire/404.html -->
 <html lang="zxx">
@@ -315,7 +389,7 @@
                         <!-- Contact Form Start -->
                         <div class="contact-form">
                             <!-- Contact Form Start -->
-                            <form id="contactForm" action="contact.html#" method="POST" data-toggle="validator"
+                            <form id="contactForm" action="contact.php" method="POST" data-toggle="validator"
                                 class="wow fadeInUp" data-wow-delay="0.4s" novalidate="true"
                                 style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
                                 <div class="row">
@@ -342,9 +416,11 @@
                                             placeholder="Your Message"></textarea>
                                         <div class="help-block with-errors"></div>
                                     </div>
-
+                                    <div class="col-md-12 mb-4">
+                                        <div class="h-captcha" data-sitekey="144a89ac-e82e-4d7c-a118-649413e4188c"></div>
+                                    </div>
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn-default disabled">submit</button>
+                                        <button type="submit" class="btn-default">submit</button>
                                         <div id="msgSubmit" class="h3 hidden"></div>
                                     </div>
                                 </div>
@@ -683,6 +759,11 @@
         <script src="./assets/js/wow.min.js"></script>
         <!-- Main Custom js file -->
         <script src="./assets/js/function.js"></script>
+
+        <!-- Adding hcaptcha  -->
+        <script src="https://hcaptcha.com/1/api.js" async defer></script>
+
+
         <!-- disable right click on images -->
     <script>
         document.addEventListener('contextmenu', function(e) {
