@@ -839,7 +839,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Wow js file -->
         <script src="./assets/js/wow.min.js"></script>
         <!-- Main Custom js file -->
-        <script src="./assets/js/function.js"></script>
+        <!-- <script src="./assets/js/function.js"></script> -->
 
         <!-- Adding hcaptcha  -->
         <script src="https://hcaptcha.com/1/api.js" async defer></script>
