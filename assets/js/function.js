@@ -288,21 +288,21 @@
 		}
 	});
 
-	function submitForm(){
-		/* Ajax call to submit form */
-		$.ajax({
-			type: "POST",
-			url: "form-process.php",
-			data: $contactform.serialize(),
-			success : function(text){
-				if (text === "success"){
-					formSuccess();
-				} else {
-					submitMSG(false,text);
-				}
-			}
-		});
-	}
+	// function submitForm(){
+	// 	/* Ajax call to submit form */
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		url: "form-process.php",
+	// 		data: $contactform.serialize(),
+	// 		success : function(text){
+	// 			if (text === "success"){
+	// 				formSuccess();
+	// 			} else {
+	// 				submitMSG(false,text);
+	// 			}
+	// 		}
+	// 	});
+	// }
 
 	function formSuccess(){
 		$contactform[0].reset();
