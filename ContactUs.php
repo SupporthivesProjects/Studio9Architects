@@ -106,6 +106,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ";
 
         logMessage("Preparing admin email");
+        $mail->SMTPDebug = 2;
+$mail->Debugoutput = 'html';
         $mail->send();
         logMessage("Admin mail sent");
 
